@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Lesson21.1</string>
+    <string name="Text1">Заметки</string>
+    <string name="AppText">Введите заметку</string>
+    <string name="BattonString"> Добавить</string>
+    <string name="Name"> Имя</string>
+    <string name="Text"> Текст</string>
+    <string name="Data"> Дата</string>
+    <string name="Home">Home</string>
+    <string name="BattonFragment">Добавить заметку</string>
+
+</resources>
