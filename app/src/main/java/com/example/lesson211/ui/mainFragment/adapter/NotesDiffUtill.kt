@@ -1,7 +1,7 @@
-package com.example.lesson211.adapter
+package com.example.lesson211.ui.mainFragment.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.lesson211.Notes
+import com.example.lesson211.data.Notes
 
 class NotesDiffUtill : DiffUtil.ItemCallback<Notes>() {
 

@@ -1,4 +1,4 @@
-package com.example.lesson211
+package com.example.lesson211.ui.addNotes
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.lesson211.databinding.FragmentAddNotesBinding
 
 class AddNotesFragment : Fragment() {
 
-private var binding:FragmentAddNotesBinding? = null
+private var binding: FragmentAddNotesBinding? = null
 
-
+private val viewModel: AddNotesViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -27,22 +28,22 @@ private var binding:FragmentAddNotesBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.run {
-            addNotesButton.setOnClickListener {
-
-
-            val name:String = nameEditText.text.toString()
-            val text:String = textEditText.text.toString()
-            val data:String = dateEditText.text.toString()
-                val id = NotesDB.getListNotes().last().id + 1
-            NotesDB.addNotes(
-            Notes(id, name, text, data)
-            )
+        viewModel.notesAdded.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), "Заметка добавлена", Toast.LENGTH_SHORT).show()
             parentFragmentManager.popBackStack()
-
         }
+        viewModel.error = {
+            Toast.makeText(requireContext(), "Заметка не добавлена", Toast.LENGTH_SHORT).show()
+        }
+        binding?.run {
+            addNotesButton.setOnClickListener {
+                viewModel.addNotes(
+                    name =  nameEditText.text.toString(),
+                    text = textEditText.text.toString(),
+                    data = dateEditText.text.toString()
+                )
 
+            }
         }
     }
 }

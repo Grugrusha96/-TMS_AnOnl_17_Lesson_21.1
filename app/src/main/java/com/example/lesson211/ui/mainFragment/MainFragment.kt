@@ -1,4 +1,4 @@
-package com.example.lesson211
+package com.example.lesson211.ui.mainFragment
 
 import android.os.Bundle
 import android.util.Log
@@ -6,15 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lesson211.adapter.UserAdapter
+import com.example.lesson211.R
+import com.example.lesson211.data.Notes
+import com.example.lesson211.ui.mainFragment.adapter.UserAdapter
 import com.example.lesson211.databinding.FragmentMainBinding
-import kotlin.math.log
+import com.example.lesson211.ui.addNotes.AddNotesFragment
+import com.example.lesson211.ui.notes.NotesFragment
 
-
-class MainFragment : Fragment(), Subscriber {
+class MainFragment : Fragment() {
 
     private var binding: FragmentMainBinding? = null
+
+    private val viewModel : MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,8 +32,10 @@ class MainFragment : Fragment(), Subscriber {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        NotesDB.subscribe(this)
-        setList()
+        viewModel.listNotes.observe(viewLifecycleOwner){
+             setList(it)
+        }
+        viewModel.getListNotes()
         binding?.openFragmentBatton?.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .add(R.id.conteiner, AddNotesFragment())
@@ -37,16 +44,7 @@ class MainFragment : Fragment(), Subscriber {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        NotesDB.unsubscribe(this)
-    }
-
-    override fun update() {
-        setList()
-    }
-
-    private fun setList() {
+    private fun setList(list: List<Notes>) {
             binding?.recyclerView?.run {
                 if (adapter == null) {
                     Log.e("setList", "in")
@@ -60,8 +58,8 @@ class MainFragment : Fragment(), Subscriber {
 
                 }
             }
-            Log.e("setList", "set")
-            (adapter as? UserAdapter)?.submitList(NotesDB.getListNotes())
+                Log.e("setList", "set")
+            (adapter as? UserAdapter)?.submitList(list)
         }
     }
 }

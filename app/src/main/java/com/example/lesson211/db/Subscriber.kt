@@ -1,4 +1,4 @@
-package com.example.lesson211
+package com.example.lesson211.db
 
 interface Subscriber {
 

@@ -1,15 +1,15 @@
-package com.example.lesson211.adapter
+package com.example.lesson211.ui.mainFragment.adapter
 
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.lesson211.Notes
+import com.example.lesson211.data.Notes
 import com.example.lesson211.databinding.UserListItemBinding
 
 
 class UserAdapter(
-    private val onClick:(contact:Notes)->Unit
+    private val onClick:(contact: Notes)->Unit
 ): ListAdapter<Notes, NotesViewHolder>(NotesDiffUtill()){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         return NotesViewHolder(

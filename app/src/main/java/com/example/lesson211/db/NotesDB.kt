@@ -1,4 +1,6 @@
-package com.example.lesson211
+package com.example.lesson211.db
+
+import com.example.lesson211.data.Notes
 
 object NotesDB {
    private val listNotes = arrayListOf(
@@ -10,7 +12,7 @@ object NotesDB {
     )
     private val subscribers = arrayListOf<Subscriber>()
 
-    fun  getNotesById(id:Int):Notes?{
+    fun  getNotesById(id:Int): Notes?{
         return listNotes.find { it.id == id }
     }
     fun addNotes(notes: Notes){
